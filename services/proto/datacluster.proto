@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package cluster;
+
+service DataCluster {
+
+    rpc AddRedditMessage (RedditMessage) returns (Reply) {}
+}
+
+message RedditMessage{
+    int32 timestamp = 1;
+    string message = 2;
+    enum type{
+        submission = 0;
+        comment = 1;
+    }
+    string subreddit = 3;
+}
+
+message Reply {
+    bool ack=1;
+}
