@@ -31,3 +31,10 @@ def add_message(db_connection, message):
     except AttributeError as exp:
         print "We could not insert the message: %r" % exp
     return ack
+
+
+def get_messages(search_query=None, db_connection=None):
+    """ Get messages from database base on search_query. """
+    if not db_connection:
+        db_connection = connect_database()
+    return db_connection.items.find(search_query)
