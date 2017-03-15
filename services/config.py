@@ -14,3 +14,6 @@ MONGO_SERVER = get_environment_var('MONGO_SERVER', "0.0.0.0")
 MONGO_PORT = int(get_environment_var('MONGO_PORT', 27017))
 
 DATABASE_NAME = get_environment_var('DATABASE_NAME', "reddit_messages")
+
+SERVER_PORT = 50050
+DAY = 60 * 60 * 24
