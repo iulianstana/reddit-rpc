@@ -10,11 +10,12 @@ service DataCluster {
 message RedditMessage{
     int32 timestamp = 1;
     string message = 2;
-    enum type{
+    enum message_type{
         submission = 0;
         comment = 1;
     }
     string subreddit = 3;
+    message_type type = 4;
 }
 
 message Reply {

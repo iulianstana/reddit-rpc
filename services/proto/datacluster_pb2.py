@@ -19,15 +19,15 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='datacluster.proto',
   package='cluster',
   syntax='proto3',
-  serialized_pb=_b('\n\x11\x64\x61tacluster.proto\x12\x07\x63luster\"k\n\rRedditMessage\x12\x11\n\ttimestamp\x18\x01 \x01(\x05\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x11\n\tsubreddit\x18\x03 \x01(\t\"#\n\x04type\x12\x0e\n\nsubmission\x10\x00\x12\x0b\n\x07\x63omment\x10\x01\"\x14\n\x05Reply\x12\x0b\n\x03\x61\x63k\x18\x01 \x01(\x08\x32K\n\x0b\x44\x61taCluster\x12<\n\x10\x41\x64\x64RedditMessage\x12\x16.cluster.RedditMessage\x1a\x0e.cluster.Reply\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x11\x64\x61tacluster.proto\x12\x07\x63luster\"\xa6\x01\n\rRedditMessage\x12\x11\n\ttimestamp\x18\x01 \x01(\x05\x12\x0f\n\x07message\x18\x02 \x01(\t\x12\x11\n\tsubreddit\x18\x03 \x01(\t\x12\x31\n\x04type\x18\x04 \x01(\x0e\x32#.cluster.RedditMessage.message_type\"+\n\x0cmessage_type\x12\x0e\n\nsubmission\x10\x00\x12\x0b\n\x07\x63omment\x10\x01\"\x14\n\x05Reply\x12\x0b\n\x03\x61\x63k\x18\x01 \x01(\x08\x32K\n\x0b\x44\x61taCluster\x12<\n\x10\x41\x64\x64RedditMessage\x12\x16.cluster.RedditMessage\x1a\x0e.cluster.Reply\"\x00\x62\x06proto3')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
 
-_REDDITMESSAGE_TYPE = _descriptor.EnumDescriptor(
-  name='type',
-  full_name='cluster.RedditMessage.type',
+_REDDITMESSAGE_MESSAGE_TYPE = _descriptor.EnumDescriptor(
+  name='message_type',
+  full_name='cluster.RedditMessage.message_type',
   filename=None,
   file=DESCRIPTOR,
   values=[
@@ -42,10 +42,10 @@ _REDDITMESSAGE_TYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=102,
-  serialized_end=137,
+  serialized_start=154,
+  serialized_end=197,
 )
-_sym_db.RegisterEnumDescriptor(_REDDITMESSAGE_TYPE)
+_sym_db.RegisterEnumDescriptor(_REDDITMESSAGE_MESSAGE_TYPE)
 
 
 _REDDITMESSAGE = _descriptor.Descriptor(
@@ -76,12 +76,19 @@ _REDDITMESSAGE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='type', full_name='cluster.RedditMessage.type', index=3,
+      number=4, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
-    _REDDITMESSAGE_TYPE,
+    _REDDITMESSAGE_MESSAGE_TYPE,
   ],
   options=None,
   is_extendable=False,
@@ -89,8 +96,8 @@ _REDDITMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=30,
-  serialized_end=137,
+  serialized_start=31,
+  serialized_end=197,
 )
 
 
@@ -120,11 +127,12 @@ _REPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=139,
-  serialized_end=159,
+  serialized_start=199,
+  serialized_end=219,
 )
 
-_REDDITMESSAGE_TYPE.containing_type = _REDDITMESSAGE
+_REDDITMESSAGE.fields_by_name['type'].enum_type = _REDDITMESSAGE_MESSAGE_TYPE
+_REDDITMESSAGE_MESSAGE_TYPE.containing_type = _REDDITMESSAGE
 DESCRIPTOR.message_types_by_name['RedditMessage'] = _REDDITMESSAGE
 DESCRIPTOR.message_types_by_name['Reply'] = _REPLY
 
