@@ -1,4 +1,5 @@
 import time
+import random
 
 from concurrent import futures
 import grpc
@@ -6,14 +7,19 @@ import grpc
 from config import SERVER_PORT, DAY
 from proto import datacluster_pb2
 from proto import datacluster_pb2_grpc
+from raven_config import client
 
 
 class ListenerServer(datacluster_pb2_grpc.DataClusterServicer):
     def AddRedditMessage(self, request, context):
-        print request.timestamp
-        print request.message
-        print request.type
-        return datacluster_pb2.Reply(ack=True)
+        # create a random crush in our system
+        if random.randint(1, 100) < 90:
+            print "(%s) [%s]: %s" % (request.timestamp, request.type, request.message)
+            return datacluster_pb2.Reply(ack=True)
+        else:
+            # we lost data, log and send False ack
+            client.captureMessage('Received message was not process.')
+            return datacluster_pb2.Reply(ack=False)
 
 
 def serve():
