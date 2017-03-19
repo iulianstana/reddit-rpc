@@ -7,6 +7,7 @@ import grpc
 from config import SERVER_HOST, SERVER_PORT, WAIT_TIME, JSON_PATH
 import datacluster_pb2
 import datacluster_pb2_grpc
+from raven_config import client
 from reddit_wrapper import RedditWrapper
 
 
