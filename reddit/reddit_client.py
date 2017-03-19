@@ -1,26 +1,69 @@
+import datetime
+import json
 import time
 
 import grpc
 
-from config import SERVER_HOST, SERVER_PORT
+from config import SERVER_HOST, SERVER_PORT, WAIT_TIME, JSON_PATH
 import datacluster_pb2
 import datacluster_pb2_grpc
+from reddit_wrapper import RedditWrapper
 
 
-def client_message():
+def read_json_file(path):
+    """Read json file from a specific path and return the subreddits. """
+    subreddits = []
+    try:
+        with open(path) as json_file:
+            subreddits = json.load(json_file)['subreddits']
+    except IOError as exp:
+        print exp
+    return subreddits
+
+
+def run_reader(stub, subreddits):
+    """Start fetching data and send it to the server. """
+    if subreddits:
+        while True:
+            # times are restarted, start with a wait
+            time.sleep(WAIT_TIME)
+
+            for subreddit in subreddits:
+                time_now = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+                print "[%s] Start fetching ... '%s'" % (time_now, subreddit)
+                reddit_obj = subreddits[subreddit]
+                reddit_obj.restart_fetch_time()
+
+                for message in reddit_obj.fetch_submissions():
+                    client_message(stub, message)
+                for message in reddit_obj.fetch_comments():
+                    client_message(stub, message)
+    else:
+        print "no reddits to fetch"
+
+
+def client_message(stub, message):
+    """Send message to the server using the stub. """
+    response = False
+    while not response:
+        response = stub.AddRedditMessage(datacluster_pb2.RedditMessage(**message))
+        print "%s" % response.ack
+
+
+def main():
+    subreddits = read_json_file(JSON_PATH)
+    subreddit_objs = {}
+
     channel = grpc.insecure_channel('%s:%s' % (SERVER_HOST, SERVER_PORT))
     stub = datacluster_pb2_grpc.DataClusterStub(channel)
 
-    message = {
-        'timestamp': int(time.time()),
-        'message': 'Nuca doarme... shhhh!!!',
-        'type': datacluster_pb2.RedditMessage.submission,
+    for subreddit in subreddits:
+        subreddit_objs[subreddit] = RedditWrapper(subreddit, start_ts=time.time())
 
-    }
-
-    response = stub.AddRedditMessage(datacluster_pb2.RedditMessage(**message))
-    print response.ack
-
+    run_reader(stub, subreddit_objs)
 
 if __name__ == '__main__':
-    client_message()
+    try:
+        main()
+    except KeyboardInterrupt:
+        exit(0)
