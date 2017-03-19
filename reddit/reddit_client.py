@@ -45,10 +45,12 @@ def run_reader(stub, subreddits):
 
 def client_message(stub, message):
     """Send message to the server using the stub. """
-    response = False
-    while not response:
+    response_status = False
+    while not response_status:
         response = stub.AddRedditMessage(datacluster_pb2.RedditMessage(**message))
-        print "%s" % response.ack
+        response_status = response.ack
+        if not response_status:
+            print "Resend the current message"
 
 
 def main():
