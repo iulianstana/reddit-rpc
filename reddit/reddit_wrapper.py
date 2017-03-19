@@ -33,7 +33,7 @@ class RedditWrapper:
                 if submission.created_utc < self.start_time:
                     break
                 new_submissions.append({
-                    'timestamp': submission.created_utc,
+                    'timestamp': int(submission.created_utc),
                     'message': submission.title,
                     'type': datacluster_pb2.RedditMessage.submission,
                     'subreddit': self.subreddit
@@ -57,7 +57,7 @@ class RedditWrapper:
                 if comment.created_utc < self.start_time:
                     break
                 new_comments.append({
-                    'timestamp': comment.created_utc,
+                    'timestamp': int(comment.created_utc),
                     'message': comment.body,
                     'type': datacluster_pb2.RedditMessage.comment,
                     'subreddit': self.subreddit
@@ -70,6 +70,11 @@ class RedditWrapper:
         """Get data for this subreddit. And print it to stdout. """
         print self.fetch_submissions()
         print self.fetch_comments()
+
+    def restart_fetch_time(self):
+        """Restart fetching times. """
+        self.start_time = self.end_time
+        self.end_time = time.time()
 
 
 if __name__ == "__main__":
