@@ -3,7 +3,8 @@ import time
 
 import grpc
 from concurrent import futures
-from config import SERVER_PORT, DAY
+
+from config.constants.database_warehouse import SERVER_PORT, DAY
 from protos.python import datacluster_pb2, datacluster_pb2_grpc
 from raven_config import client
 
