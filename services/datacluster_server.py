@@ -1,12 +1,10 @@
 import random
 import time
 
-from concurrent import futures
 import grpc
-
+from concurrent import futures
 from config import SERVER_PORT, DAY
-from proto import datacluster_pb2
-from proto import datacluster_pb2_grpc
+from protos.python import datacluster_pb2, datacluster_pb2_grpc
 from raven_config import client
 
 
