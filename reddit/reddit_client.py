@@ -4,10 +4,9 @@ import time
 
 import grpc
 
-from config import SERVER_HOST, SERVER_PORT, WAIT_TIME, JSON_PATH
+from config.constants.reddit import SERVER_HOST, SERVER_PORT, WAIT_TIME, JSON_PATH
 from protos.python import datacluster_pb2
 from protos.python import datacluster_pb2_grpc
-from raven_config import client
 from reddit_wrapper import RedditWrapper
 
 

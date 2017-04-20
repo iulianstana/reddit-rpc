@@ -1,7 +1,8 @@
 from pymongo import MongoClient
+
 from pymongo.errors import ServerSelectionTimeoutError
 
-from config import DATABASE_NAME, MONGO_SERVER, MONGO_PORT
+from config.constants.database_warehouse import DATABASE_NAME, MONGO_SERVER, MONGO_PORT
 
 
 def connect_database(server=MONGO_SERVER, port=MONGO_PORT, database_name=DATABASE_NAME):
