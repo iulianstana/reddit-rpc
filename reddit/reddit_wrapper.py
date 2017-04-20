@@ -3,7 +3,7 @@ import time
 
 import praw
 
-import datacluster_pb2
+from protos.python import datacluster_pb2
 
 
 class RedditWrapper:
